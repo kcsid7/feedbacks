@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 class="my-5">List of Users</h1>
+
+<ul class="list-group w-50">
+    {% for user in users %}
+    <li class="list-group-item d-flex justify-content-between">
+        <span class="p-2">{{ user.first_name }} | {{ user.username }}</span>
+
+        {% if session['username'] == user.username %}
+        <a href="/users/{{ user.username }}" class="btn btn-sm btn-primary pt-2">Go To User</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock %}

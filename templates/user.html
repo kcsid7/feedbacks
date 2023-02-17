@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 class="display-2 my-4 text-capitalize">{{ user.first_name }} {{ user.last_name }}</h1>
+
+<div class="card w-25">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <strong>Email: </strong>{{ user.email }}
+        </li>
+        <li class="list-group-item">
+            <strong>Username: </strong>{{ user.username }}
+        </li>
+    </ul>
+</div>
+
+{% if session["username"] == user.username %}
+    <div class="d-flex align-items-start p-2 align-items-center">
+        <a href="/users/{{ user.username }}/feedback/add" class="btn btn-md btn-primary mx-2">Add Feedback</a>    
+        <form action="/users/{{ user.username }}/delete" method="POST">
+            <button class="btn btn-danger" type="submit">Delete User</button>
+        </form>
+    </div>
+{% endif %}
+
+{% if user.feedbacks %}
+<div class="w-50">
+    <ul class="list-group list-group-flush">
+        {% for feedback in user.feedbacks %}
+        <li class="list-group-item my-2 border border-dark rounded">
+            <h5>{{ feedback.title }} </h5>
+            <p> {{ feedback.content }}</p>
+
+            {% if session["username"] == user.username %}
+            <div class="w-50 d-flex">
+                <div class="">
+                    <a href="/feedback/{{ feedback.id }}/update" class="btn btn-md btn-light" style="text-decoration: none;">
+                        <i class="fa-regular fa-pen-to-square fa-xl"></i>
+                    </a>
+                </div>
+                <div>
+                    <form action="/feedback/{{ feedback.id }}/delete" method="POST">
+                        <button type="submit" class="btn btn-md btn-light"><i class="fa-regular fa-trash-can fa-xl"></i></button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% endblock %}

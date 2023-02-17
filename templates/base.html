@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flask - Feedback</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/app.css">
+    <script src="https://kit.fontawesome.com/21ac27ed4e.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="container">
+
+    <nav class="navbar navbar-dark bg-danger justify-content-between">
+        <div class="container">
+          <div>
+            <a href="/" class="navbar-brand text-light mx-2">Home</a>
+            {% if session["username"] %}
+
+            {% endif %}
+          </div>
+
+
+            <ul class="nav navbar-nav flex-row float-right">
+
+              {% if session["username"] %}
+              <li class="nav-item mx-2 ">
+                <div class="d-flex align-items-center">
+                  <a href="/users/{{ session["username"] }}" class="navbar-brand text-light mx-2">
+                    {{ session["username"]}}
+                  </a>
+                  <form action="/logout" method="POST">
+                    <button class="_navbarlink btn btn-link" style="color:white">Logout</button>
+                  </form>
+                </div>
+              </li>
+              {% else %}
+              <li class="nav-item mx-2">
+                <a href="/login" class="navlink text-light _navbarlink">Login</a>
+              </li>
+              <li class="nav-item mx-2">
+                  <a href="/register" class="navlink text-light _navbarlink">Register</a>
+              </li>
+              {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+
+    {% for cat, msg in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ cat }}">
+        {{ msg }}
+      </div>
+    {% endfor %}
+
+
+    <div class="container d-flex flex-column align-items-center" >
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>

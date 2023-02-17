@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<h1 class="my-5 display-3">List of Feedbacks</h1>
+
+<div class="w-50">
+    <ul class="list-group list-group-flush">
+        {% for feedback in feedbacks %}
+        <li class="list-group-item my-2 border border-dark rounded">
+            <h4>{{ feedback.title }} </h4>
+            <h6 style="color:red">- {{ feedback.user.username if feedback.user.username else "//deleted_user//" }}</h6>
+            <p> {{ feedback.content }}</p>
+
+
+            {% if "username" in session %}
+                {% if session["username"] == feedback.user.username %}
+                <div class="w-50 d-flex">
+                    <div class="">
+                        <a href="/feedback/{{ feedback.id }}/update" class="btn btn-md btn-light" style="text-decoration: none;">
+                            <i class="fa-regular fa-pen-to-square fa-xl"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <form action="/feedback/{{ feedback.id }}/delete" method="POST">
+                            <button type="submit" class="btn btn-md btn-light"><i class="fa-regular fa-trash-can fa-xl"></i></button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

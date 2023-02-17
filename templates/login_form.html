@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1 class="my-4">Login User</h1>
+
+<form method="POST" id="login-user">
+    {% include '_form.html' %}
+    <button type="submit" class="btn btn-md btn-success mt-4">Login</button>
+</form>
+
+
+{% endblock %}
